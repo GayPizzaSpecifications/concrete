@@ -7,6 +7,7 @@ import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
 import java.nio.file.Files
+import java.util.Properties
 
 open class SetupPaperServer : DefaultTask() {
   init {
@@ -39,16 +40,20 @@ open class SetupPaperServer : DefaultTask() {
       paperPluginsDirectory.mkdirs()
     }
 
-    for (project in project.allprojects) {
-      if (!project.isPluginProject()) {
-        continue
-      }
-
+    for (project in project.findPluginProjects()) {
       val task = project.shadowJarTask!!
       val pluginJarFile = task.outputs.files.first()
       val pluginLinkFile = paperPluginsDirectory.resolve("${project.name}.jar")
       pluginLinkFile.delete()
       Files.createSymbolicLink(pluginLinkFile.toPath(), pluginJarFile.toPath())
+    }
+
+    if (concrete.acceptServerEula.isPresent && concrete.acceptServerEula.get()) {
+      val writer = minecraftServerDirectory.resolve("eula.txt").bufferedWriter()
+      val properties = Properties()
+      properties.setProperty("eula", "true")
+      properties.store(writer, "Written by Concrete")
+      writer.close()
     }
   }
 

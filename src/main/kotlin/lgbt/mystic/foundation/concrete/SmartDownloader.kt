@@ -14,9 +14,9 @@ class SmartDownloader(
     val hashResult = checkLocalFileHash()
     if (hashResult != HashResult.ValidHash) {
       downloadRemoteFile()
-      return false
+      return true
     }
-    return true
+    return false
   }
 
   private fun downloadRemoteFile() {

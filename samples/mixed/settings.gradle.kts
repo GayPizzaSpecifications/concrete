@@ -1,0 +1,5 @@
+includeBuild("../..")
+include(":bukkit-plugins")
+include(":bukkit-plugins:hello-world")
+include(":bukkit-plugins:goodbye-world")
+include(":other-library")
