@@ -12,7 +12,7 @@ open class UpdateManifestTask : DefaultTask() {
     val updateFile = manifestsDir.resolve("update.json")
     val rootPath = project.rootProject.rootDir.toPath()
     val updateManifest = project.findPluginProjects().mapNotNull { project ->
-      val paths = project.shadowJarOutputs.allFilesRelativeToPath(rootPath)
+      val paths = project.shadowJarOutputs!!.allFilesRelativeToPath(rootPath)
       if (paths.isNotEmpty()) {
         project.name to mapOf(
           "version" to project.version,

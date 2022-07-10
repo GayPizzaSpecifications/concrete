@@ -1,3 +1,3 @@
 plugins {
-  id("lgbt.mystic.foundation.concrete-project")
+  id("lgbt.mystic.foundation.concrete-plugin")
 }

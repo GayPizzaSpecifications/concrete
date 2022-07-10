@@ -7,7 +7,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class PaperVersionClient(
-  val client: HttpClient = HttpClient.newHttpClient(),
+  private val client: HttpClient = HttpClient.newHttpClient(),
   private val gson: Gson = Globals.gson
 ) {
   private val apiBaseUrl = URI.create("https://papermc.io/api/v2/")

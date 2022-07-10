@@ -1,11 +1,9 @@
 package lgbt.mystic.foundation.concrete
 
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.repositories
@@ -36,7 +34,7 @@ class ConcreteProjectPlugin : Plugin<Project> {
       }
     }
 
-    val paperApiVersion = project.rootProject.extensions.getByType<ConcreteExtension>().paperApiVersion.get()
+    val paperApiVersion = project.concreteRootExtension.paperApiVersion.get()
 
     project.dependencies.add("compileOnly", "io.papermc.paper:paper-api:${paperApiVersion}")
 
@@ -55,7 +53,7 @@ class ConcreteProjectPlugin : Plugin<Project> {
       }
     }
 
-    (project.tasks["shadowJar"] as ShadowJar).apply {
+    project.shadowJarTask!!.apply {
       archiveClassifier.set("plugin")
     }
 
@@ -69,6 +67,6 @@ class ConcreteProjectPlugin : Plugin<Project> {
       }
     }
 
-    project.rootProject.tasks["setupPaperServer"].dependsOn(project.tasks["shadowJar"])
+    project.concreteRootProject.tasks["setupPaperServer"].dependsOn(project.tasks["shadowJar"])
   }
 }
