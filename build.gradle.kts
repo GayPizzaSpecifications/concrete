@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
   `kotlin-dsl`
   kotlin("plugin.serialization") version "1.6.21"
@@ -20,16 +22,33 @@ dependencies {
   implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
   implementation("com.google.code.gson:gson:2.9.0")
 
-  // TODO: What uses this?
+  // Implementation of crypto used in smart downloader.
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
 }
 
 gradlePlugin {
   plugins {
-    create("concrete") {
-      id = "lgbt.mystic.foundation.concrete"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteGradlePlugin"
+    create("concrete-root") {
+      id = "lgbt.mystic.foundation.concrete-root"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteRootPlugin"
     }
+
+    create("concrete-project") {
+      id = "lgbt.mystic.foundation.concrete-project"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteProjectPlugin"
+    }
+  }
+}
+
+java {
+  val version = JavaVersion.toVersion("1.8")
+  sourceCompatibility = version
+  targetCompatibility = version
+}
+
+tasks.withType<KotlinCompile> {
+  kotlinOptions {
+    jvmTarget = "1.8"
   }
 }
 
@@ -37,7 +56,7 @@ publishing {
   repositories {
     mavenLocal()
     maven {
-      name = "GitHubPackages"
+      name = "github-packages"
       url = uri("https://maven.pkg.github.com/mysticlgbt/concrete")
       credentials {
         username = project.findProperty("github.username") as String?
