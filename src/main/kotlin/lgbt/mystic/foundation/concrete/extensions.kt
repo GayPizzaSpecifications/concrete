@@ -40,7 +40,7 @@ internal val Project.concreteRootProject: Project
     }
 
     if (parent != null) {
-      return parent!!
+      return parent!!.concreteRootProject
     }
 
     throw RuntimeException("Failed to find concrete root. Did you apply the concrete root plugin?")
