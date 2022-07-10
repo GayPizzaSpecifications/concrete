@@ -1,14 +1,16 @@
 package lgbt.mystic.foundation.concrete.sample.helloworld
 
 import lgbt.mystic.foundation.concrete.other.OtherLibrary
+import lgbt.mystic.foundation.conrete.sample.common.logOnDisable
+import lgbt.mystic.foundation.conrete.sample.common.logOnEnable
 import org.bukkit.plugin.java.JavaPlugin
 
 class HelloWorldPlugin : JavaPlugin() {
   override fun onEnable() {
-    slF4JLogger.info("Enabled Hello World (Constant is ${OtherLibrary.SOME_CONSTANT})")
+    logOnEnable(OtherLibrary.HELLO_WORLD)
   }
 
   override fun onDisable() {
-    slF4JLogger.info("Disabled Hello World (Constant is ${OtherLibrary.SOME_CONSTANT})")
+    logOnDisable(OtherLibrary.HELLO_WORLD)
   }
 }

@@ -6,7 +6,7 @@ import org.gradle.api.tasks.TaskOutputs
 import java.nio.file.FileSystems
 import java.nio.file.Path
 
-internal fun Project.isPluginProject() = plugins.hasPlugin(ConcreteProjectPlugin::class.java)
+internal fun Project.isPluginProject() = plugins.hasPlugin(ConcretePluginPlugin::class.java)
 internal fun Project.findPluginProjects() = allprojects.filter { project -> project.isPluginProject() }
 
 internal val Project.shadowJarTask: ShadowJar?

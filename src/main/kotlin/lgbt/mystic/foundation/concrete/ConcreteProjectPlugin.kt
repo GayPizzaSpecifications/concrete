@@ -4,16 +4,13 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
-import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
-import org.gradle.language.jvm.tasks.ProcessResources
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URI
 
-@Suppress("UnstableApiUsage")
-class ConcreteProjectPlugin : Plugin<Project> {
+open class ConcreteProjectPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     val versionWithBuild = if (System.getenv("CI_PIPELINE_IID") != null) {
       project.rootProject.version.toString() + ".${System.getenv("CI_PIPELINE_IID")}"
@@ -21,11 +18,10 @@ class ConcreteProjectPlugin : Plugin<Project> {
       "DEV"
     }
 
+    project.version = versionWithBuild
+
     project.plugins.apply("org.jetbrains.kotlin.jvm")
     project.plugins.apply("org.jetbrains.kotlin.plugin.serialization")
-    project.plugins.apply("com.github.johnrengelman.shadow")
-
-    project.version = versionWithBuild
 
     project.repositories {
       maven {
@@ -35,7 +31,6 @@ class ConcreteProjectPlugin : Plugin<Project> {
     }
 
     val paperApiVersion = project.concreteRootExtension.paperApiVersion.get()
-
     project.dependencies.add("compileOnly", "io.papermc.paper:paper-api:${paperApiVersion}")
 
     project.extensions.getByType<JavaPluginExtension>().apply {
@@ -44,21 +39,6 @@ class ConcreteProjectPlugin : Plugin<Project> {
       targetCompatibility = javaVersion
     }
 
-    (project.tasks.getByName("processResources") as ProcessResources).apply {
-      val props = mapOf("version" to project.version.toString())
-      inputs.properties(props)
-      filteringCharset = "UTF-8"
-      filesMatching("plugin.yml") {
-        expand(props)
-      }
-    }
-
-    project.shadowJarTask!!.apply {
-      archiveClassifier.set("plugin")
-    }
-
-    project.tasks["assemble"].dependsOn(project.tasks["shadowJar"])
-
     project.tasks.withType<KotlinCompile>().forEach {
       it.apply {
         kotlinOptions.apply {
@@ -66,7 +46,5 @@ class ConcreteProjectPlugin : Plugin<Project> {
         }
       }
     }
-
-    project.concreteRootProject.tasks["setupPaperServer"].dependsOn(project.tasks["shadowJar"])
   }
 }

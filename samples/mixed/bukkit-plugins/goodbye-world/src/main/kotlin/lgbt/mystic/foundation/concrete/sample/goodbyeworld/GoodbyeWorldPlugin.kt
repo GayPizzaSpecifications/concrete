@@ -1,13 +1,15 @@
 package lgbt.mystic.foundation.concrete.sample.goodbyeworld
 
+import lgbt.mystic.foundation.conrete.sample.common.logOnDisable
+import lgbt.mystic.foundation.conrete.sample.common.logOnEnable
 import org.bukkit.plugin.java.JavaPlugin
 
 class GoodbyeWorldPlugin : JavaPlugin() {
   override fun onEnable() {
-    slF4JLogger.info("Enabled Goodbye World")
+    logOnEnable("Goodbye World")
   }
 
   override fun onDisable() {
-    slF4JLogger.info("Disabled Goodbye World")
+    logOnDisable("Goodbye World")
   }
 }

@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
   implementation(project(":other-library"))
+  implementation(project(":bukkit-plugins:common-library"))
 }

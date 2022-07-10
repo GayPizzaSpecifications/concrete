@@ -33,7 +33,12 @@ gradlePlugin {
 
     create("concrete-plugin") {
       id = "lgbt.mystic.foundation.concrete-plugin"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteProjectPlugin"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcretePluginPlugin"
+    }
+
+    create("concrete-library") {
+      id = "lgbt.mystic.foundation.concrete-library"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteLibraryPlugin"
     }
   }
 }
