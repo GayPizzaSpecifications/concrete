@@ -5,9 +5,8 @@ import org.gradle.api.tasks.TaskOutputs
 import java.nio.file.FileSystems
 import java.nio.file.Path
 
-fun Project.isFoundationPlugin() = name.startsWith("foundation-")
-
-fun Project.findPluginProjects() = rootProject.subprojects.filter { project -> project.isFoundationPlugin() }
+fun Project.isPluginProject() = project.tasks.names.contains("shadowJar")
+fun Project.findPluginProjects() = rootProject.allprojects.filter { project -> project.isPluginProject() }
 
 val Project.shadowJarOutputs: TaskOutputs
   get() = project.tasks.getByName("shadowJar").outputs

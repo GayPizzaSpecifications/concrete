@@ -1,5 +1,6 @@
 package lgbt.mystic.foundation.concrete
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -39,17 +40,15 @@ open class SetupPaperServer : DefaultTask() {
       paperPluginsDirectory.mkdirs()
     }
 
-    for (project in project.subprojects) {
-      if (!project.isFoundationPlugin()) {
+    for (project in project.allprojects) {
+      if (!project.isPluginProject()) {
         continue
       }
 
-      val pluginJarFile = project.buildDir.resolve("libs/${project.name}-DEV-plugin.jar")
+      val task = project.tasks.getByName("shadowJar") as ShadowJar
+      val pluginJarFile = task.outputs.files.first()
       val pluginLinkFile = paperPluginsDirectory.resolve("${project.name}.jar")
-      if (pluginLinkFile.exists()) {
-        pluginLinkFile.delete()
-      }
-
+      pluginLinkFile.delete()
       Files.createSymbolicLink(pluginLinkFile.toPath(), pluginJarFile.toPath())
     }
   }
