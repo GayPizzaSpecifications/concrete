@@ -16,7 +16,7 @@ open class SetupPaperServer : DefaultTask() {
 
   @get:Input
   @set:Option(option = "update", description = "Update Paper Server")
-  var shouldUpdatePaperServer = false
+  var shouldUpdatePaperServer = true
 
   private val paperVersionClient = PaperVersionClient()
 
@@ -58,6 +58,14 @@ open class SetupPaperServer : DefaultTask() {
   }
 
   private fun downloadLatestBuild(paperVersionGroup: String, paperJarFile: File) {
+    if (project.gradle.startParameter.isOffline) {
+      if (!paperJarFile.exists()) {
+        throw RuntimeException("Offline mode is enabled and Paper has not been downloaded.")
+      } else {
+        logger.lifecycle("Offline mode is enabled, skipping Paper update.")
+        return
+      }
+    }
     val builds = paperVersionClient.getVersionBuilds(paperVersionGroup)
     val build = builds.last()
     val download = build.downloads["application"]!!
