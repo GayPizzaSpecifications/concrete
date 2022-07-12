@@ -66,5 +66,16 @@ publishing {
         password = project.findProperty("github.token") as String?
       }
     }
+    maven {
+      name = "gitlab"
+      url  = uri("https://gitlab.com/api/v4/projects/37752100/packages/maven")
+      credentials(HttpHeaderCredentials::class.java) {
+        name = "Private-Token"
+        value = project.findProperty("gitlab.com.accessToken") as String?
+      }
+      authentication {
+        create<HttpHeaderAuthentication>("header")
+      }
+    }
   }
 }
