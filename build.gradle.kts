@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   `kotlin-dsl`
   kotlin("plugin.serialization") version "1.6.21"
@@ -33,22 +31,27 @@ gradlePlugin {
       implementationClass = "lgbt.mystic.foundation.concrete.ConcreteRootPlugin"
     }
 
-    create("concrete-project") {
-      id = "lgbt.mystic.foundation.concrete-project"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteProjectPlugin"
+    create("concrete-plugin") {
+      id = "lgbt.mystic.foundation.concrete-plugin"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcretePluginPlugin"
+    }
+
+    create("concrete-library") {
+      id = "lgbt.mystic.foundation.concrete-library"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteLibraryPlugin"
     }
   }
 }
 
 java {
-  val version = JavaVersion.toVersion("1.8")
+  val version = JavaVersion.toVersion("11")
   sourceCompatibility = version
   targetCompatibility = version
 }
 
-tasks.withType<KotlinCompile> {
+tasks.compileKotlin {
   kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
 }
 

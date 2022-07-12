@@ -1,2 +1,2 @@
-includeBuild("..")
+includeBuild("../..")
 include(":hello-world")

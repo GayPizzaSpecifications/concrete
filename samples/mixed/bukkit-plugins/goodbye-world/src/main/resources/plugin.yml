@@ -1,0 +1,9 @@
+name: GoodbyeWorld
+version: '${version}'
+main: lgbt.mystic.foundation.concrete.sample.goodbyeworld.GoodbyeWorldPlugin
+api-version: 1.18
+prefix: GoodbyeWorld
+load: STARTUP
+authors:
+  - kubelet
+  - kexec
