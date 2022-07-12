@@ -1,7 +1,7 @@
 package lgbt.mystic.foundation.concrete.sample.goodbyeworld
 
-import lgbt.mystic.foundation.conrete.sample.common.logOnDisable
-import lgbt.mystic.foundation.conrete.sample.common.logOnEnable
+import lgbt.mystic.foundation.concrete.sample.common.logOnDisable
+import lgbt.mystic.foundation.concrete.sample.common.logOnEnable
 import org.bukkit.plugin.java.JavaPlugin
 
 class GoodbyeWorldPlugin : JavaPlugin() {

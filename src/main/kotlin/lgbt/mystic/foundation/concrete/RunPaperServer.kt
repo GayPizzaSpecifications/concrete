@@ -1,6 +1,7 @@
 package lgbt.mystic.foundation.concrete
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
@@ -10,6 +11,12 @@ open class RunPaperServer : DefaultTask() {
   init {
     outputs.upToDateWhen { false }
   }
+
+  @get:Input
+  var additionalServerArguments = mutableListOf<String>()
+
+  @get:Input
+  var disableServerGui = true
 
   @TaskAction
   fun runPaperServer() {
@@ -22,7 +29,14 @@ open class RunPaperServer : DefaultTask() {
     project.javaexec {
       classpath(paperJarFile.absolutePath)
       workingDir(minecraftServerDirectory)
-      args("nogui")
+
+      val allServerArguments = mutableListOf<String>()
+      allServerArguments.addAll(additionalServerArguments)
+      if (disableServerGui) {
+        allServerArguments.add("nogui")
+      }
+
+      args(allServerArguments)
       mainClass.set(mainClassName)
     }
   }

@@ -11,7 +11,7 @@ class ConcretePluginPlugin : ConcreteProjectPlugin() {
 
     project.plugins.apply("com.github.johnrengelman.shadow")
 
-    (project.tasks.getByName("processResources") as ProcessResources).apply {
+    project.tasks.find<ProcessResources>("processResources")!!.apply {
       val props = mapOf("version" to project.version.toString())
       inputs.properties(props)
       filteringCharset = "UTF-8"
@@ -24,7 +24,7 @@ class ConcretePluginPlugin : ConcreteProjectPlugin() {
       archiveClassifier.set("plugin")
     }
 
-    project.tasks["assemble"].dependsOn(project.tasks["shadowJar"])
+    project.tasks.addTaskDependency("assemble", "shadowJar")
 
     project.concreteRootProject.tasks["setupPaperServer"].dependsOn(project.tasks["shadowJar"])
   }

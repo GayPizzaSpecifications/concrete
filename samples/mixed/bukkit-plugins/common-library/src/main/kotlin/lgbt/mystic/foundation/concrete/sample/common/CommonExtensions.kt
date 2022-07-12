@@ -1,4 +1,4 @@
-package lgbt.mystic.foundation.conrete.sample.common
+package lgbt.mystic.foundation.concrete.sample.common
 
 import org.bukkit.plugin.java.JavaPlugin
 
