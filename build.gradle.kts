@@ -31,14 +31,19 @@ gradlePlugin {
       implementationClass = "lgbt.mystic.foundation.concrete.ConcreteRootPlugin"
     }
 
-    create("concrete-plugin") {
-      id = "lgbt.mystic.foundation.concrete-plugin"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcretePluginPlugin"
+    create("concrete-base") {
+      id = "lgbt.mystic.foundation.concrete-base"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteBasePlugin"
     }
 
     create("concrete-library") {
       id = "lgbt.mystic.foundation.concrete-library"
       implementationClass = "lgbt.mystic.foundation.concrete.ConcreteLibraryPlugin"
+    }
+
+    create("concrete-plugin") {
+      id = "lgbt.mystic.foundation.concrete-plugin"
+      implementationClass = "lgbt.mystic.foundation.concrete.ConcretePluginPlugin"
     }
   }
 }

@@ -5,7 +5,7 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.language.jvm.tasks.ProcessResources
 
 @Suppress("UnstableApiUsage")
-class ConcretePluginPlugin : ConcreteProjectPlugin() {
+class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
   override fun apply(project: Project) {
     super.apply(project)
 

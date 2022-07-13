@@ -1,3 +1,3 @@
 plugins {
-  `java-library`
+  id("lgbt.mystic.foundation.concrete-base")
 }

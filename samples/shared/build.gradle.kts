@@ -1,5 +1,6 @@
 plugins {
   id("lgbt.mystic.foundation.concrete-root")
+  id("lgbt.mystic.foundation.concrete-plugin")
 }
 
 concrete {
