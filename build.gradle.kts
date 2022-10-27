@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "lgbt.mystic.foundation"
-version = "0.4.0"
+version = "0.5.0"
 
 repositories {
   mavenCentral()
@@ -18,7 +18,7 @@ dependencies {
   implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
   implementation("org.jetbrains.kotlin:kotlin-serialization:1.6.21")
   implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
-  implementation("com.google.code.gson:gson:2.9.0")
+  implementation("com.google.code.gson:gson:2.10")
 
   // Implementation of crypto used in smart downloader.
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
@@ -49,20 +49,21 @@ gradlePlugin {
 }
 
 java {
-  val version = JavaVersion.toVersion("11")
+  val version = JavaVersion.toVersion("17")
   sourceCompatibility = version
   targetCompatibility = version
 }
 
 tasks.compileKotlin {
   kotlinOptions {
-    jvmTarget = "11"
+    jvmTarget = "17"
   }
 }
 
 publishing {
   repositories {
     mavenLocal()
+
     maven {
       name = "github-packages"
       url = uri("https://maven.pkg.github.com/mysticlgbt/concrete")
@@ -71,16 +72,23 @@ publishing {
         password = project.findProperty("github.token") as String?
       }
     }
+
     maven {
       name = "gitlab"
-      url  = uri("https://gitlab.com/api/v4/projects/37752100/packages/maven")
+      url = uri("https://gitlab.com/api/v4/projects/37752100/packages/maven")
       credentials(HttpHeaderCredentials::class.java) {
         name = "Private-Token"
         value = project.findProperty("gitlab.com.accessToken") as String?
       }
+
       authentication {
         create<HttpHeaderAuthentication>("header")
       }
     }
   }
+}
+
+tasks.withType<Wrapper> {
+  gradleVersion = "7.5.1"
+  distributionType = Wrapper.DistributionType.ALL
 }

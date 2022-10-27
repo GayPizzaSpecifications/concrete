@@ -16,6 +16,10 @@ open class ConcreteBasePlugin : Plugin<Project> {
       "DEV"
     }
 
+    if (project.repositories.none { it.name == "MavenRepo" }) {
+      project.repositories.mavenCentral()
+    }
+
     project.version = versionWithBuild
 
     project.plugins.apply("org.jetbrains.kotlin.jvm")
