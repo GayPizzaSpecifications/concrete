@@ -17,6 +17,7 @@ jobs:
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publishAllPublicationsToGitLabRepository
+          arguments: publishAllPublicationsToGitHubPackagesRepository publishAllPublicationsToGitLabRepository
         env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           GITLAB_TOKEN: "${{ secrets.GITLAB_TOKEN }}"
