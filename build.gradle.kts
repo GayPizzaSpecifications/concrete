@@ -65,7 +65,7 @@ publishing {
     mavenLocal()
 
     maven {
-      name = "github-packages"
+      name = "GitHubPackages"
       url = uri("https://maven.pkg.github.com/gaypizzaspecifications/concrete")
       credentials {
         username = project.findProperty("github.username") as String? ?: "unknown"
