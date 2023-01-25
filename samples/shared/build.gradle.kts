@@ -1,6 +1,6 @@
 plugins {
-  id("lgbt.mystic.foundation.concrete-root")
-  id("lgbt.mystic.foundation.concrete-plugin")
+  id("gay.pizza.foundation.concrete-root")
+  id("gay.pizza.foundation.concrete-plugin")
 }
 
 concrete {

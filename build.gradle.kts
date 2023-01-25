@@ -1,13 +1,13 @@
 plugins {
   `kotlin-dsl`
-  kotlin("plugin.serialization") version "1.6.21"
+  kotlin("plugin.serialization") version "1.7.10"
 
   id("maven-publish")
   id("java-gradle-plugin")
 }
 
-group = "lgbt.mystic.foundation"
-version = "0.5.0"
+group = "gay.pizza.foundation"
+version = "0.6.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -15,10 +15,10 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21")
-  implementation("org.jetbrains.kotlin:kotlin-serialization:1.6.21")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
+  implementation("org.jetbrains.kotlin:kotlin-serialization:1.7.10")
   implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
-  implementation("com.google.code.gson:gson:2.10")
+  implementation("com.google.code.gson:gson:2.10.1")
 
   // Implementation of crypto used in smart downloader.
   implementation("org.bouncycastle:bcprov-jdk15on:1.70")
@@ -27,23 +27,23 @@ dependencies {
 gradlePlugin {
   plugins {
     create("concrete-root") {
-      id = "lgbt.mystic.foundation.concrete-root"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteRootPlugin"
+      id = "gay.pizza.foundation.concrete-root"
+      implementationClass = "gay.pizza.foundation.concrete.ConcreteRootPlugin"
     }
 
     create("concrete-base") {
-      id = "lgbt.mystic.foundation.concrete-base"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteBasePlugin"
+      id = "gay.pizza.foundation.concrete-base"
+      implementationClass = "gay.pizza.foundation.concrete.ConcreteBasePlugin"
     }
 
     create("concrete-library") {
-      id = "lgbt.mystic.foundation.concrete-library"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcreteLibraryPlugin"
+      id = "gay.pizza.foundation.concrete-library"
+      implementationClass = "gay.pizza.foundation.concrete.ConcreteLibraryPlugin"
     }
 
     create("concrete-plugin") {
-      id = "lgbt.mystic.foundation.concrete-plugin"
-      implementationClass = "lgbt.mystic.foundation.concrete.ConcretePluginPlugin"
+      id = "gay.pizza.foundation.concrete-plugin"
+      implementationClass = "gay.pizza.foundation.concrete.ConcretePluginPlugin"
     }
   }
 }
@@ -66,29 +66,16 @@ publishing {
 
     maven {
       name = "github-packages"
-      url = uri("https://maven.pkg.github.com/mysticlgbt/concrete")
+      url = uri("https://maven.pkg.github.com/gaypizzaspecifications/concrete")
       credentials {
-        username = project.findProperty("github.username") as String?
-        password = project.findProperty("github.token") as String?
-      }
-    }
-
-    maven {
-      name = "gitlab"
-      url = uri("https://gitlab.com/api/v4/projects/37752100/packages/maven")
-      credentials(HttpHeaderCredentials::class.java) {
-        name = "Private-Token"
-        value = project.findProperty("gitlab.com.accessToken") as String?
-      }
-
-      authentication {
-        create<HttpHeaderAuthentication>("header")
+        username = project.findProperty("github.username") as String? ?: "unknown"
+        password = project.findProperty("github.token") as String? ?: System.getenv("GITHUB_TOKEN")
       }
     }
   }
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "7.5.1"
+  gradleVersion = "7.6"
   distributionType = Wrapper.DistributionType.ALL
 }

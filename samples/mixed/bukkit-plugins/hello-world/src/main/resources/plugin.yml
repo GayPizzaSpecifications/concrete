@@ -1,6 +1,6 @@
 name: HelloWorld
 version: '${version}'
-main: lgbt.mystic.foundation.concrete.sample.helloworld.HelloWorldPlugin
+main: gay.pizza.foundation.concrete.sample.helloworld.HelloWorldPlugin
 api-version: 1.18
 prefix: HelloWorld
 load: STARTUP

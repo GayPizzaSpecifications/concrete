@@ -1,5 +1,5 @@
 plugins {
-  id("lgbt.mystic.foundation.concrete-plugin")
+  id("gay.pizza.foundation.concrete-plugin")
 }
 
 dependencies {

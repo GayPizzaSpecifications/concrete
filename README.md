@@ -5,4 +5,4 @@ Concrete is a Gradle plugin for Bukkit projects. Originally spawned out of the G
 ## Contributors
 
 - [@azenla](https://github.com/azenla)
-- [@lgorence](https://github.com/lgorence)
+- [@kubeliv](https://github.com/kubeliv)

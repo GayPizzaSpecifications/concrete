@@ -1,3 +1,3 @@
 plugins {
-  id("lgbt.mystic.foundation.concrete-base")
+  id("gay.pizza.foundation.concrete-base")
 }
