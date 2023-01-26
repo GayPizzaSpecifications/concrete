@@ -1,4 +1,4 @@
-name: Build
+name: Plugin
 on: [push]
 jobs:
   build:

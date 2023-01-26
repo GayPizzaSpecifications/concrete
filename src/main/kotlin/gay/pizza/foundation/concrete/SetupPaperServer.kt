@@ -31,7 +31,7 @@ open class SetupPaperServer : DefaultTask() {
 
     val paperJarFile = project.file("${concrete.minecraftServerPath.get()}/paper.jar")
     if (!paperJarFile.exists() || shouldUpdatePaperServer) {
-      downloadLatestBuild(concrete.paperVersionGroup.get(), paperJarFile)
+      downloadLatestBuild(concrete.paperServerVersionGroup.get(), paperJarFile)
     }
 
     val paperPluginsDirectory = minecraftServerDirectory.resolve("plugins")

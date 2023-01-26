@@ -1,0 +1,25 @@
+name: Samples
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build mixed sample with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: -P samples/mixed build
+      - name: Build shared sample with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: -P samples/shared build
+      - name: Build simple sample with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: -P samples/simple build

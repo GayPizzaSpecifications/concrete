@@ -5,7 +5,7 @@ plugins {
 
 concrete {
   minecraftServerPath.set("server")
-  paperVersionGroup.set("1.19")
+  paperServerVersionGroup.set("1.19")
   paperApiVersion.set("1.19.3-R0.1-SNAPSHOT")
   acceptServerEula.set(true)
 }
