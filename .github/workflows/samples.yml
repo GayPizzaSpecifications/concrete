@@ -14,12 +14,12 @@ jobs:
       - name: Build mixed sample with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: -P samples/mixed build
+          arguments: -p samples/mixed build
       - name: Build shared sample with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: -P samples/shared build
+          arguments: -p samples/shared build
       - name: Build simple sample with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: -P samples/simple build
+          arguments: -p samples/simple build
