@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "gay.pizza.foundation"
-version = "0.6.0"
+version = "0.7.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
@@ -100,5 +100,4 @@ publishing {
 
 tasks.withType<Wrapper> {
   gradleVersion = "7.6"
-  distributionType = Wrapper.DistributionType.ALL
 }
