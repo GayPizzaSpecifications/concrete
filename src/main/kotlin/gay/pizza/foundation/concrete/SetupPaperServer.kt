@@ -18,8 +18,6 @@ open class SetupPaperServer : SetupMinecraftServer() {
   @set:Option(option = "update", description = "Update Paper Server")
   var shouldUpdatePaperServer = true
 
-  private val paperVersionClient = PaperVersionClient()
-
   @TaskAction
   fun setupPaperServer() {
     val concrete = project.extensions.getByType<ConcreteExtension>()
@@ -31,6 +29,7 @@ open class SetupPaperServer : SetupMinecraftServer() {
   }
 
   private fun downloadLatestBuild(paperVersionGroup: String, paperJarFile: File) {
+    val paperVersionClient = PaperVersionClient()
     if (project.gradle.startParameter.isOffline) {
       if (!paperJarFile.exists()) {
         throw RuntimeException("Offline mode is enabled and Paper has not been downloaded.")
