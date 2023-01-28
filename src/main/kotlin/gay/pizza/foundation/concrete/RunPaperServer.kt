@@ -7,41 +7,15 @@ import org.gradle.kotlin.dsl.getByType
 import java.io.File
 import java.util.jar.JarFile
 
-open class RunPaperServer : DefaultTask() {
+open class RunPaperServer : RunMinecraftServer() {
   init {
     outputs.upToDateWhen { false }
   }
 
-  @get:Input
-  var additionalServerArguments = mutableListOf<String>()
-
-  @get:Input
-  var disableServerGui = true
-
-  @TaskAction
-  fun runPaperServer() {
+  override fun getServerDirectory(): File {
     val concrete = project.extensions.getByType<ConcreteExtension>()
-
-    val minecraftServerDirectory = project.file(concrete.minecraftServerPath.get())
-    val paperJarFile = minecraftServerDirectory.resolve("paper.jar")
-    val mainClassName = readMainClass(paperJarFile)
-
-    project.javaexec {
-      classpath(paperJarFile.absolutePath)
-      workingDir(minecraftServerDirectory)
-
-      val allServerArguments = mutableListOf<String>()
-      allServerArguments.addAll(additionalServerArguments)
-      if (disableServerGui) {
-        allServerArguments.add("nogui")
-      }
-
-      args(allServerArguments)
-      mainClass.set(mainClassName)
-    }
+    return project.file(concrete.minecraftServerPath.get())
   }
 
-  private fun readMainClass(file: File): String = JarFile(file).use { jar ->
-    jar.manifest.mainAttributes.getValue("Main-Class")!!
-  }
+  override fun getServerJarName(): String = "paper.jar"
 }

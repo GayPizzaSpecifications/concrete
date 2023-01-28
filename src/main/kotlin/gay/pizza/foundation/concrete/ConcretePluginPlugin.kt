@@ -27,5 +27,7 @@ class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
     project.tasks.addTaskDependency("assemble", "shadowJar")
 
     project.concreteRootProject.tasks["setupPaperServer"].dependsOn(project.tasks["shadowJar"])
+    project.concreteRootProject.tasks.find<SetupLocalMinecraftServer>("setupLocalMinecraftServer")
+      ?.dependsOn(project.tasks["shadowJar"])
   }
 }

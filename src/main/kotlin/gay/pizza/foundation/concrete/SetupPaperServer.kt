@@ -1,6 +1,5 @@
 package gay.pizza.foundation.concrete
 
-import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
@@ -9,7 +8,7 @@ import java.io.File
 import java.nio.file.Files
 import java.util.Properties
 
-open class SetupPaperServer : DefaultTask() {
+open class SetupPaperServer : SetupMinecraftServer() {
   init {
     outputs.upToDateWhen { false }
   }
@@ -21,39 +20,12 @@ open class SetupPaperServer : DefaultTask() {
   private val paperVersionClient = PaperVersionClient()
 
   @TaskAction
-  fun downloadPaperTask() {
+  fun setupPaperServer() {
     val concrete = project.extensions.getByType<ConcreteExtension>()
-    val minecraftServerDirectory = project.file(concrete.minecraftServerPath.get())
-
-    if (!minecraftServerDirectory.exists()) {
-      minecraftServerDirectory.mkdirs()
-    }
-
-    val paperJarFile = project.file("${concrete.minecraftServerPath.get()}/paper.jar")
+    val minecraftServerDirectory = getServerDirectory()
+    val paperJarFile = project.file("${minecraftServerDirectory}/paper.jar")
     if (!paperJarFile.exists() || shouldUpdatePaperServer) {
       downloadLatestBuild(concrete.paperServerVersionGroup.get(), paperJarFile)
-    }
-
-    val paperPluginsDirectory = minecraftServerDirectory.resolve("plugins")
-
-    if (!paperPluginsDirectory.exists()) {
-      paperPluginsDirectory.mkdirs()
-    }
-
-    for (project in project.findPluginProjects()) {
-      val task = project.shadowJarTask!!
-      val pluginJarFile = task.outputs.files.first()
-      val pluginLinkFile = paperPluginsDirectory.resolve("${project.name}.jar")
-      pluginLinkFile.delete()
-      Files.createSymbolicLink(pluginLinkFile.toPath(), pluginJarFile.toPath())
-    }
-
-    if (concrete.acceptServerEula.isPresent && concrete.acceptServerEula.get()) {
-      val writer = minecraftServerDirectory.resolve("eula.txt").bufferedWriter()
-      val properties = Properties()
-      properties.setProperty("eula", "true")
-      properties.store(writer, "Written by Concrete")
-      writer.close()
     }
   }
 
@@ -76,5 +48,10 @@ open class SetupPaperServer : DefaultTask() {
     } else {
       logger.lifecycle("Paper Server ${build.version} build ${build.build} is up-to-date")
     }
+  }
+
+  override fun getServerDirectory(): File {
+    val concrete = project.extensions.getByType<ConcreteExtension>()
+    return project.file(concrete.minecraftServerPath.get())
   }
 }
