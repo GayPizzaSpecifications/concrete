@@ -1,6 +1,7 @@
 package gay.pizza.foundation.concrete
 
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
@@ -50,6 +51,7 @@ open class SetupPaperServer : SetupMinecraftServer() {
     }
   }
 
+  @Internal
   override fun getServerDirectory(): File {
     val concrete = project.extensions.getByType<ConcreteExtension>()
     return project.file(concrete.minecraftServerPath.get())

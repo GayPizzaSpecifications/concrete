@@ -1,6 +1,7 @@
 package gay.pizza.foundation.concrete
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
@@ -43,5 +44,6 @@ abstract class SetupMinecraftServer : DefaultTask() {
     }
   }
 
+  @Internal
   abstract fun getServerDirectory(): File
 }
