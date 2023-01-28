@@ -6,8 +6,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 import org.gradle.kotlin.dsl.getByType
 import java.io.File
-import java.nio.file.Files
-import java.util.Properties
 
 open class SetupPaperServer : SetupMinecraftServer() {
   init {

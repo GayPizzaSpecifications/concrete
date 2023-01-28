@@ -8,7 +8,7 @@ import java.nio.file.Path
 open class UpdateManifestTask : DefaultTask() {
   @TaskAction
   fun update() {
-    val manifestsDir = ensureManifestsDir()
+    val manifestsDir = ensureManifestsDirectory()
     val updateFile = manifestsDir.resolve("update.json")
     val rootPath = project.rootProject.rootDir.toPath()
     val updateManifest = project.findPluginProjects().mapNotNull { project ->
@@ -24,7 +24,7 @@ open class UpdateManifestTask : DefaultTask() {
     Files.writeString(updateFile, Globals.gson.toJson(updateManifest))
   }
 
-  private fun ensureManifestsDir(): Path {
+  private fun ensureManifestsDirectory(): Path {
     val manifestsDir = project.buildDir.resolve("manifests")
     manifestsDir.mkdirs()
     return manifestsDir.toPath()
