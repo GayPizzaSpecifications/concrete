@@ -12,6 +12,8 @@ open class ConcreteBasePlugin : Plugin<Project> {
   override fun apply(project: Project) {
     val versionWithBuild = if (System.getenv("CI_PIPELINE_IID") != null) {
       project.rootProject.version.toString() + ".${System.getenv("CI_PIPELINE_IID")}"
+    } else if (System.getenv("CONCRETE_BUILD_NUMBER") != null) {
+      project.rootProject.version.toString() + ".${System.getenv("CONCRETE_BUILD_NUMBER")}"
     } else {
       "DEV"
     }
