@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "gay.pizza.foundation"
-version = "0.8.0"
+version = "0.9.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
