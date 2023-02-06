@@ -2,8 +2,8 @@ plugins {
   `kotlin-dsl`
   kotlin("plugin.serialization") version "1.7.10"
 
-  id("maven-publish")
-  id("java-gradle-plugin")
+  `maven-publish`
+  `java-gradle-plugin`
 }
 
 group = "gay.pizza.foundation"
@@ -15,8 +15,8 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
-  implementation("org.jetbrains.kotlin:kotlin-serialization:1.7.10")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
+  implementation("org.jetbrains.kotlin:kotlin-serialization:1.8.10")
   implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
   implementation("com.google.code.gson:gson:2.10.1")
 
