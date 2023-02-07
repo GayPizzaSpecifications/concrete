@@ -5,6 +5,8 @@ plugins {
 
   `maven-publish`
   `java-gradle-plugin`
+
+  id("com.gradle.plugin-publish") version "1.1.0"
 }
 
 group = "gay.pizza.foundation"
