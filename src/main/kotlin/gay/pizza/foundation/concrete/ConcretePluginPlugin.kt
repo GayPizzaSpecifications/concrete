@@ -11,12 +11,16 @@ class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
 
     project.plugins.apply("com.github.johnrengelman.shadow")
 
-    project.tasks.find<ProcessResources>("processResources")!!.apply {
-      val props = mapOf("version" to project.version.toString())
-      inputs.properties(props)
-      filteringCharset = "UTF-8"
-      filesMatching("plugin.yml") {
-        expand(props)
+    // During IDEA project import, if this code is active, it will print warnings.
+    // This will make the VERSION field unexpanded if you run using the IntelliJ build system.
+    if (!project.properties.containsKey("idea.gradle.do.not.build.tasks")) {
+      project.tasks.find<ProcessResources>("processResources")!!.apply {
+        val props = mapOf("version" to project.version.toString())
+        inputs.properties(props)
+        filteringCharset = "UTF-8"
+        filesMatching("plugin.yml") {
+          expand(props)
+        }
       }
     }
 

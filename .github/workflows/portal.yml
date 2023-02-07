@@ -1,8 +1,8 @@
-name: Publish
+name: Gradle Plugin Portal
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -17,9 +17,7 @@ jobs:
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publishAllPublicationsToGitHubPackagesRepository publishAllPublicationsToGitLabRepository
+          arguments: publishPlugins
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          GITLAB_TOKEN: "${{ secrets.GITLAB_TOKEN }}"
           GRADLE_PLUGIN_PUBLISHING_KEY: "${{ secrets.GRADLE_PLUGIN_PUBLISHING_KEY }}"
           GRADLE_PLUGIN_PUBLISHING_SECRET: "${{ secrets.GRADLE_PLUGIN_PUBLISHING_SECRET }}"

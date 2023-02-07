@@ -1,3 +1,4 @@
+@file:Suppress("UnstableApiUsage")
 plugins {
   `kotlin-dsl`
   kotlin("plugin.serialization") version "1.7.10"
@@ -25,27 +26,54 @@ dependencies {
 }
 
 gradlePlugin {
+  website.set("https://github.com/GayPizzaSpecifications/concrete")
+  vcsUrl.set("https://github.com/GayPizzaSpecifications/concrete")
+
   plugins {
     create("concrete-root") {
       id = "gay.pizza.foundation.concrete-root"
       implementationClass = "gay.pizza.foundation.concrete.ConcreteRootPlugin"
+
+      displayName = "Concrete Root"
+      description = "Concrete project root."
     }
 
     create("concrete-base") {
       id = "gay.pizza.foundation.concrete-base"
       implementationClass = "gay.pizza.foundation.concrete.ConcreteBasePlugin"
+
+      displayName = "Concrete Base"
+      description = "Concrete project base."
     }
 
     create("concrete-library") {
       id = "gay.pizza.foundation.concrete-library"
       implementationClass = "gay.pizza.foundation.concrete.ConcreteLibraryPlugin"
+
+      displayName = "Concrete Library"
+      description = "Concrete project library."
     }
 
     create("concrete-plugin") {
       id = "gay.pizza.foundation.concrete-plugin"
       implementationClass = "gay.pizza.foundation.concrete.ConcretePluginPlugin"
+
+      displayName = "Concrete Library"
+      description = "Concrete project plugin."
+    }
+
+    forEach { declaration ->
+      declaration.tags.set(listOf("foundation-concrete", "minecraft-bukkit"))
     }
   }
+}
+
+val gradlePublishingKey: String? = System.getenv("GRADLE_PLUGIN_PUBLISHING_KEY")
+val gradlePublishingSecret: String? = System.getenv("GRADLE_PLUGIN_PUBLISHING_SECRET")
+
+if (gradlePublishingKey != null && gradlePublishingSecret != null) {
+  project.setProperty("gradle.publish.key", gradlePublishingKey.toString())
+  project.setProperty("gradle.publish.secret", gradlePublishingSecret.toString())
 }
 
 java {
