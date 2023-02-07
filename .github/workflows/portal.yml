@@ -17,7 +17,4 @@ jobs:
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: publishPlugins
-        env:
-          GRADLE_PLUGIN_PUBLISHING_KEY: "${{ secrets.GRADLE_PLUGIN_PUBLISHING_KEY }}"
-          GRADLE_PLUGIN_PUBLISHING_SECRET: "${{ secrets.GRADLE_PLUGIN_PUBLISHING_SECRET }}"
+          arguments: "publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PLUGIN_PUBLISHING_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PLUGIN_PUBLISHING_SECRET }}"
