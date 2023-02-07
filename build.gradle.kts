@@ -101,3 +101,7 @@ publishing {
 tasks.withType<Wrapper> {
   gradleVersion = "7.6"
 }
+
+java {
+  withSourcesJar()
+}
