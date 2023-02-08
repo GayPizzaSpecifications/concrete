@@ -36,7 +36,7 @@ gradlePlugin {
       implementationClass = "gay.pizza.foundation.concrete.ConcreteRootPlugin"
 
       displayName = "Concrete Root"
-      description = "Concrete project root."
+      description = "Gradle conventions for Foundation Bukkit plugins. Root project plugin."
     }
 
     create("concrete-base") {
@@ -44,7 +44,7 @@ gradlePlugin {
       implementationClass = "gay.pizza.foundation.concrete.ConcreteBasePlugin"
 
       displayName = "Concrete Base"
-      description = "Concrete project base."
+      description = "Gradle conventions for Foundation Bukkit plugins. Base project plugin."
     }
 
     create("concrete-library") {
@@ -52,7 +52,7 @@ gradlePlugin {
       implementationClass = "gay.pizza.foundation.concrete.ConcreteLibraryPlugin"
 
       displayName = "Concrete Library"
-      description = "Concrete project library."
+      description = "Gradle conventions for Foundation Bukkit plugins. Library project plugin."
     }
 
     create("concrete-plugin") {
@@ -60,7 +60,7 @@ gradlePlugin {
       implementationClass = "gay.pizza.foundation.concrete.ConcretePluginPlugin"
 
       displayName = "Concrete Library"
-      description = "Concrete project plugin."
+      description = "Gradle conventions for Foundation Bukkit plugins. Plugin project plugin."
     }
 
     forEach { declaration ->
