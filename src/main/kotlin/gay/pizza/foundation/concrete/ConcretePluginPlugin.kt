@@ -9,7 +9,7 @@ class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
   override fun apply(project: Project) {
     super.apply(project)
 
-    project.extensions.create("concrete", ConcretePluginExtension::class.java)
+    project.extensions.create("plugin", ConcretePluginExtension::class.java)
 
     project.plugins.apply("com.github.johnrengelman.shadow")
 
