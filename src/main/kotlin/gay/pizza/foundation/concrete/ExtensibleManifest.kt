@@ -19,7 +19,7 @@ data class ExtensibleManifestItem(
    */
   val name: String,
   /**
-   * The type of item, for example "bukkit-plugin"
+   * The type of item.
    */
   val type: String,
   /**
@@ -33,7 +33,7 @@ data class ExtensibleManifestItem(
   /**
    * The files that are required to install the item.
    */
-  val files: List<String>
+  val files: List<ExtensibleManifestItemFile>
 )
 
 /**
@@ -45,7 +45,7 @@ data class ExtensibleManifestItemFile(
    */
   val name: String,
   /**
-   * A type of file. For example: "plugin-jar".
+   * A type of file.
    */
   val type: String,
   /**

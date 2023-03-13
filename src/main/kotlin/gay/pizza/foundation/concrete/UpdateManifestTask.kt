@@ -4,6 +4,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.name
 
 open class UpdateManifestTask : DefaultTask() {
   @TaskAction
@@ -33,7 +34,17 @@ open class UpdateManifestTask : DefaultTask() {
         type = "bukkit-plugin",
         version = project.version.toString(),
         dependencies = dependencies,
-        files = paths.map { it.toUnixString() }
+        files = paths.map { path ->
+          var type = "unknown"
+          if (path.name.endsWith("-plugin.jar")) {
+            type = "plugin-jar"
+          }
+          ExtensibleManifestItemFile(
+            name = path.name,
+            type = type,
+            path = path.toUnixString()
+          )
+        }
       )
     }
 
