@@ -18,7 +18,7 @@ open class SetupPaperServer : SetupMinecraftServer() {
 
   @TaskAction
   fun setupPaperServer() {
-    val concrete = project.extensions.getByType<ConcreteExtension>()
+    val concrete = project.extensions.getByType<ConcreteRootExtension>()
     val minecraftServerDirectory = getServerDirectory()
     val paperJarFile = project.file("${minecraftServerDirectory}/paper.jar")
     if (!paperJarFile.exists() || shouldUpdatePaperServer) {
@@ -50,7 +50,7 @@ open class SetupPaperServer : SetupMinecraftServer() {
 
   @Internal
   override fun getServerDirectory(): File {
-    val concrete = project.extensions.getByType<ConcreteExtension>()
+    val concrete = project.extensions.getByType<ConcreteRootExtension>()
     return project.file(concrete.minecraftServerPath.get())
   }
 }

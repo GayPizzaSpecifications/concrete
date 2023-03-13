@@ -9,7 +9,7 @@ import java.nio.file.Paths
 class ConcreteRootPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.apply(plugin = "base")
-    project.extensions.create<ConcreteExtension>("concrete")
+    project.extensions.create<ConcreteRootExtension>("concrete")
     val setupPaperServer = project.tasks.create<SetupPaperServer>("setupPaperServer")
     val runPaperServer = project.tasks.create<RunPaperServer>("runPaperServer")
     runPaperServer.dependsOn(setupPaperServer)

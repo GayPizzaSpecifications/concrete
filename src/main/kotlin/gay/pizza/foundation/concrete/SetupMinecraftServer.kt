@@ -34,7 +34,7 @@ abstract class SetupMinecraftServer : DefaultTask() {
       Files.createSymbolicLink(pluginLinkFile.toPath(), pluginJarFile.toPath())
     }
 
-    val concrete = project.extensions.getByType<ConcreteExtension>()
+    val concrete = project.extensions.getByType<ConcreteRootExtension>()
     if (concrete.acceptServerEula.isPresent && concrete.acceptServerEula.get()) {
       val writer = minecraftServerDirectory.resolve("eula.txt").bufferedWriter()
       val properties = Properties()

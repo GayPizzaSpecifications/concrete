@@ -9,6 +9,8 @@ class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
   override fun apply(project: Project) {
     super.apply(project)
 
+    project.extensions.create("concrete", ConcretePluginExtension::class.java)
+
     project.plugins.apply("com.github.johnrengelman.shadow")
 
     // During IDEA project import, if this code is active, it will print warnings.

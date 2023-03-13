@@ -30,12 +30,15 @@ internal val Project.shadowJarTask: ShadowJar?
 internal val Project.shadowJarOutputs: TaskOutputs?
   get() = shadowJarTask?.outputs
 
-internal val Project.concreteRootExtension: ConcreteExtension
+internal val Project.concreteRootExtension: ConcreteRootExtension
   get() = findTargetParent(
-    valid = { extensions.findByType(ConcreteExtension::class.java) != null },
-    extract = { extensions.findByType(ConcreteExtension::class.java)!! },
+    valid = { extensions.findByType(ConcreteRootExtension::class.java) != null },
+    extract = { extensions.findByType(ConcreteRootExtension::class.java)!! },
     error = { "Failed to find concrete root. Did you apply the concrete root plugin?" }
   )
+
+internal val Project.concretePluginExtension: ConcretePluginExtension
+  get() = extensions.getByType(ConcretePluginExtension::class.java)
 
 /**
  * Finds the concrete root project, which is the first project in the project hierarchy
@@ -43,7 +46,7 @@ internal val Project.concreteRootExtension: ConcreteExtension
  */
 internal val Project.concreteRootProject: Project
   get() = findTargetParent(
-    valid = { extensions.findByType(ConcreteExtension::class.java) != null },
+    valid = { extensions.findByType(ConcreteRootExtension::class.java) != null },
     extract = { this },
     error = { "Failed to find concrete root. Did you apply the concrete root plugin?" }
   )

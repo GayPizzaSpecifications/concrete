@@ -11,7 +11,7 @@ open class RunPaperServer : RunMinecraftServer() {
 
   @Internal
   override fun getServerDirectory(): File {
-    val concrete = project.extensions.getByType<ConcreteExtension>()
+    val concrete = project.extensions.getByType<ConcreteRootExtension>()
     return project.file(concrete.minecraftServerPath.get())
   }
 
