@@ -7,6 +7,6 @@ dependencies {
   implementation(project(":bukkit-plugins:common-library"))
 }
 
-plugin {
+concreteItem {
   dependency(project(":bukkit-plugins:goodbye-world"))
 }

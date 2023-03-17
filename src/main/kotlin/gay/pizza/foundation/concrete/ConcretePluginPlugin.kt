@@ -1,6 +1,7 @@
 package gay.pizza.foundation.concrete
 
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
 import org.gradle.language.jvm.tasks.ProcessResources
 
@@ -8,8 +9,6 @@ import org.gradle.language.jvm.tasks.ProcessResources
 class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
   override fun apply(project: Project) {
     super.apply(project)
-
-    project.extensions.create("plugin", ConcretePluginExtension::class.java)
 
     project.plugins.apply("com.github.johnrengelman.shadow")
 

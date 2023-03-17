@@ -5,14 +5,20 @@ import org.gradle.api.tasks.TaskAction
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.name
+import kotlin.io.path.relativeTo
 
 open class UpdateManifestTask : DefaultTask() {
   @TaskAction
   fun update() {
     val manifestsDir = ensureManifestsDirectory()
-    val rootPath = project.projectDir.toPath()
+    val rootExtension = project.concreteRootExtension
+    val rootPath = if (rootExtension.expansiveItemInclusion.orNull == true) {
+      project.rootProject.rootDir
+    } else {
+      project.rootDir
+    }
     val legacyUpdateManifest = project.findPluginProjects().mapNotNull { project ->
-      val paths = project.shadowJarOutputs!!.allFilesRelativeToPath(rootPath)
+      val paths = project.shadowJarOutputs!!.files.allFilesRelativeToPath(rootPath.toPath())
 
       if (paths.isNotEmpty()) {
         project.name to mapOf(
@@ -25,24 +31,25 @@ open class UpdateManifestTask : DefaultTask() {
     val legacyUpdateFile = manifestsDir.resolve("update.json")
     Files.writeString(legacyUpdateFile, Globals.gson.toJson(legacyUpdateManifest))
 
-    val extensibleUpdateManifestItems = project.findPluginProjects().mapNotNull { project ->
-      val paths = project.shadowJarOutputs!!.allFilesRelativeToPath(rootPath)
+    val extensibleUpdateManifestItems = project.findItemProjects().map { project ->
+      val concreteItemExtension = project.concreteItemExtension!!
+      val pathInclusion = concreteItemExtension.fileInclusion.orNull ?: {
+        project.shadowJarOutputs!!.files.associateWith { "plugin-jar" }
+      }
+      val paths = pathInclusion()
 
-      val dependencies = project.concretePluginExtension.dependencies.map { it.name }
+      val dependencies = concreteItemExtension.dependencies.map { it.name }
+
       ExtensibleManifestItem(
         name = project.name,
-        type = "bukkit-plugin",
-        version = project.version.toString(),
+        type = concreteItemExtension.type.orNull ?: "bukkit-plugin",
+        version = concreteItemExtension.version.orNull ?: project.version.toString(),
         dependencies = dependencies,
-        files = paths.map { path ->
-          var type = "unknown"
-          if (path.name.endsWith("-plugin.jar")) {
-            type = "plugin-jar"
-          }
+        files = paths.map { (path, type) ->
           ExtensibleManifestItemFile(
             name = path.name,
             type = type,
-            path = path.toUnixString()
+            path = path.toPath().relativeTo(rootPath.toPath()).toUnixString()
           )
         }
       )

@@ -4,6 +4,7 @@ import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -40,5 +41,7 @@ open class ConcreteBasePlugin : Plugin<Project> {
         }
       }
     }
+
+    project.extensions.create<ConcreteItemExtension>("concreteItem")
   }
 }

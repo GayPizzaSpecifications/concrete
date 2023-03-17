@@ -4,6 +4,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskContainer
 import org.gradle.api.tasks.TaskOutputs
+import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Path
 
@@ -13,9 +14,28 @@ import java.nio.file.Path
 internal fun Project.isPluginProject() = plugins.hasPlugin(ConcretePluginPlugin::class.java)
 
 /**
+ * Checks if the project has the [ConcreteBasePlugin] applied and is opting into item behavior.
+ */
+internal fun Project.isConcreteItem() =
+  isPluginProject() || concreteItemExtension?.type?.orNull != null
+
+/**
  * Finds all projects in the project's hierarchy that are plugins.
  */
 internal fun Project.findPluginProjects() = allprojects.filter { project -> project.isPluginProject() }
+
+/**
+ * Finds all projects in the project's hierarchy that are items.
+ */
+internal fun Project.findItemProjects(): List<Project> {
+  val optInExpansion = concreteRootExtension.expansiveItemInclusion.orNull ?: false
+  val searchScope = if (optInExpansion) {
+    project.rootProject.allprojects
+  } else {
+    allprojects
+  }
+  return searchScope.filter { project -> project.isConcreteItem() }
+}
 
 internal fun TaskContainer.addTaskDependency(dependent: String, dependency: String) {
   getByName(dependent).dependsOn(getByName(dependency))
@@ -37,8 +57,8 @@ internal val Project.concreteRootExtension: ConcreteRootExtension
     error = { "Failed to find concrete root. Did you apply the concrete root plugin?" }
   )
 
-internal val Project.concretePluginExtension: ConcretePluginExtension
-  get() = extensions.getByType(ConcretePluginExtension::class.java)
+internal val Project.concreteItemExtension: ConcreteItemExtension?
+  get() = extensions.findByType(ConcreteItemExtension::class.java)
 
 /**
  * Finds the concrete root project, which is the first project in the project hierarchy
@@ -68,6 +88,6 @@ internal fun <T> Project.findTargetParent(valid: Project.() -> Boolean, extract:
   throw RuntimeException(error())
 }
 
-internal fun TaskOutputs.allFilesRelativeToPath(root: Path): List<Path> = files.map { root.relativize(it.toPath()) }
+internal fun Iterable<File>.allFilesRelativeToPath(root: Path): List<Path> = map { root.relativize(it.toPath()) }
 
 internal fun Path.toUnixString() = toString().replace(FileSystems.getDefault().separator, "/")
