@@ -1,7 +1,6 @@
 package gay.pizza.foundation.concrete
 
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.get
 import org.gradle.language.jvm.tasks.ProcessResources
 

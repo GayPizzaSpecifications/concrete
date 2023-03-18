@@ -1,9 +1,13 @@
 package gay.pizza.foundation.concrete
 
 import java.net.URI
-import java.nio.file.Files
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse.BodyHandlers
 import java.nio.file.Path
 import java.security.MessageDigest
+import kotlin.io.path.exists
+import kotlin.io.path.inputStream
 
 class SmartDownloader(
   private val localFilePath: Path,
@@ -20,23 +24,25 @@ class SmartDownloader(
   }
 
   private fun downloadRemoteFile() {
-    val url = remoteDownloadUrl.toURL()
-    val remoteFileStream = url.openStream()
-    val localFileStream = Files.newOutputStream(localFilePath)
-    remoteFileStream.transferTo(localFileStream)
+    val httpClient = HttpClient.newHttpClient()
+    val request = HttpRequest.newBuilder()
+      .GET()
+      .uri(remoteDownloadUrl)
+      .build()
+    httpClient.send(request, BodyHandlers.ofFile(localFilePath))
     val hashResult = checkLocalFileHash()
     if (hashResult != HashResult.ValidHash) {
-      throw RuntimeException("Download of $remoteDownloadUrl did not result in valid hash.")
+      throw RuntimeException("Download of $remoteDownloadUrl did not result in a valid hash.")
     }
   }
 
   private fun checkLocalFileHash(): HashResult {
-    if (!Files.exists(localFilePath)) {
+    if (!localFilePath.exists()) {
       return HashResult.DoesNotExist
     }
 
     val digest = MessageDigest.getInstance("SHA-256")
-    val localFileStream = Files.newInputStream(localFilePath)
+    val localFileStream = localFilePath.inputStream()
     val buffer = ByteArray(16 * 1024)
 
     while (true) {

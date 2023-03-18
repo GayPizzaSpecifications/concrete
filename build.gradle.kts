@@ -128,7 +128,7 @@ publishing {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "8.0"
+  gradleVersion = "8.0.2"
 }
 
 java {
