@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "gay.pizza.foundation"
-version = "0.16.0-SNAPSHOT"
+version = "0.16.0"
 
 repositories {
   mavenCentral()
@@ -17,9 +17,9 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.10")
-  implementation("org.jetbrains.kotlin:kotlin-serialization:1.8.10")
-  implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.2")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
+  implementation("org.jetbrains.kotlin:kotlin-serialization:1.8.21")
+  implementation("com.github.johnrengelman:shadow:8.1.1")
   implementation("com.google.code.gson:gson:2.10.1")
 
   // Implementation of crypto used in smart downloader.
@@ -128,7 +128,7 @@ publishing {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "8.0.2"
+  gradleVersion = "8.1.1"
 }
 
 java {
