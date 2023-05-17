@@ -5,11 +5,11 @@ plugins {
   `maven-publish`
   `java-gradle-plugin`
 
-  id("com.gradle.plugin-publish") version "1.1.0"
+  id("com.gradle.plugin-publish") version "1.2.0"
 }
 
 group = "gay.pizza.foundation"
-version = "0.16.0"
+version = "0.17.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
