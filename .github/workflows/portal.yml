@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
       - name: Publish with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: "publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PLUGIN_PUBLISHING_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PLUGIN_PUBLISHING_SECRET }}"
+        run: "./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PLUGIN_PUBLISHING_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PLUGIN_PUBLISHING_SECRET }}"

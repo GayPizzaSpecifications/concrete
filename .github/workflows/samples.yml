@@ -5,21 +5,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@94baf225fe0a508e581a564467443d0e2379123b # v4
       - name: Build mixed sample with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: -p samples/mixed build
+        run: ./gradlew -p samples/mixed build
       - name: Build shared sample with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: -p samples/shared build
+        run: ./gradlew -p samples/shared build
       - name: Build simple sample with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: -p samples/simple build
+        run: ./gradlew -p samples/simple build
