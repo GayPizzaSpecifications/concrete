@@ -20,6 +20,7 @@ open class SetupPaperServer : SetupMinecraftServer() {
   fun setupPaperServer() {
     val concrete = project.extensions.getByType<ConcreteRootExtension>()
     val minecraftServerDirectory = getServerDirectory()
+    minecraftServerDirectory.mkdirs()
     val paperJarFile = project.file("${minecraftServerDirectory}/paper.jar")
     if (!paperJarFile.exists() || shouldUpdatePaperServer) {
       downloadLatestBuild(concrete.paperServerVersionGroup.get(), paperJarFile)

@@ -11,7 +11,7 @@ open class ConcreteBaseBukkitPlugin : ConcreteBasePlugin() {
     project.repositories {
       maven {
         name = "papermc"
-        url = URI.create("https://papermc.io/repo/repository/maven-public/")
+        url = URI.create("https://repo.papermc.io/repository/maven-public/")
       }
     }
 

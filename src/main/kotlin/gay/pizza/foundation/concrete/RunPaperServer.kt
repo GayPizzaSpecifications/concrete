@@ -2,9 +2,11 @@ package gay.pizza.foundation.concrete
 
 import org.gradle.api.tasks.Internal
 import org.gradle.kotlin.dsl.getByType
+import org.gradle.process.ExecOperations
 import java.io.File
+import javax.inject.Inject
 
-open class RunPaperServer : RunMinecraftServer() {
+open class RunPaperServer @Inject constructor(execOperations: ExecOperations) : RunMinecraftServer(execOperations) {
   init {
     outputs.upToDateWhen { false }
   }

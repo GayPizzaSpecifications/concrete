@@ -4,12 +4,11 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.get
 import org.gradle.language.jvm.tasks.ProcessResources
 
-@Suppress("UnstableApiUsage")
 class ConcretePluginPlugin : ConcreteBaseBukkitPlugin() {
   override fun apply(project: Project) {
     super.apply(project)
 
-    project.plugins.apply("com.github.johnrengelman.shadow")
+    project.plugins.apply("com.gradleup.shadow")
 
     // During IDEA project import, if this code is active, it will print warnings.
     // This will make the VERSION field unexpanded if you run using the IntelliJ build system.

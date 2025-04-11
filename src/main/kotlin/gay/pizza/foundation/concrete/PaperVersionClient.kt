@@ -10,7 +10,7 @@ class PaperVersionClient(
   private val client: HttpClient = HttpClient.newHttpClient(),
   private val gson: Gson = Globals.gson
 ) {
-  private val apiBaseUrl = URI.create("https://papermc.io/api/v2/")
+  private val apiBaseUrl = URI.create("https://api.papermc.io/v2/")
 
   fun getVersionBuilds(group: String): List<PaperBuild> {
     val response = client.send(

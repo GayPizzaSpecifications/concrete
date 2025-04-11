@@ -7,6 +7,7 @@ import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 open class ConcreteBasePlugin : Plugin<Project> {
@@ -29,15 +30,15 @@ open class ConcreteBasePlugin : Plugin<Project> {
     project.plugins.apply("org.jetbrains.kotlin.plugin.serialization")
 
     project.extensions.getByType<JavaPluginExtension>().apply {
-      val javaVersion = JavaVersion.toVersion(17)
+      val javaVersion = JavaVersion.toVersion(21)
       sourceCompatibility = javaVersion
       targetCompatibility = javaVersion
     }
 
     project.tasks.withType<KotlinCompile>().forEach {
       it.apply {
-        kotlinOptions.apply {
-          jvmTarget = "17"
+        compilerOptions {
+          jvmTarget.value(JvmTarget.JVM_21)
         }
       }
     }

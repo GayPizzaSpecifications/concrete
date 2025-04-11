@@ -1,9 +1,11 @@
 package gay.pizza.foundation.concrete
 
 import org.gradle.api.tasks.Internal
+import org.gradle.process.ExecOperations
 import java.io.File
+import javax.inject.Inject
 
-open class RunLocalMinecraftServer : RunMinecraftServer() {
+open class RunLocalMinecraftServer @Inject constructor(execOperations: ExecOperations) : RunMinecraftServer(execOperations) {
   @Internal
   lateinit var minecraftServerDirectory: File
 

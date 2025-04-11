@@ -2,10 +2,9 @@ package gay.pizza.foundation.concrete
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
-import java.nio.file.Files
 import java.nio.file.Path
-import kotlin.io.path.name
 import kotlin.io.path.relativeTo
+import kotlin.io.path.writeText
 
 open class UpdateManifestTask : DefaultTask() {
   @TaskAction
@@ -29,7 +28,7 @@ open class UpdateManifestTask : DefaultTask() {
     }.toMap()
 
     val legacyUpdateFile = manifestsDir.resolve("update.json")
-    Files.writeString(legacyUpdateFile, Globals.gson.toJson(legacyUpdateManifest))
+    legacyUpdateFile.writeText(Globals.gson.toJson(legacyUpdateManifest))
 
     val extensibleUpdateManifestItems = project.findItemProjects().map { project ->
       val concreteItemExtension = project.concreteItemExtension!!
@@ -60,12 +59,11 @@ open class UpdateManifestTask : DefaultTask() {
     )
 
     val extensibleUpdateManifestFile = manifestsDir.resolve("manifest.json")
-    Files.writeString(
-      extensibleUpdateManifestFile, Globals.gsonPretty.toJson(extensibleUpdateManifest) + "\n")
+    extensibleUpdateManifestFile.writeText(Globals.gson.toJson(extensibleUpdateManifest) + "\n")
   }
 
   private fun ensureManifestsDirectory(): Path {
-    val manifestsDir = project.buildDir.resolve("manifests")
+    val manifestsDir = project.layout.buildDirectory.asFile.get().resolve("manifests")
     manifestsDir.mkdirs()
     return manifestsDir.toPath()
   }

@@ -4,8 +4,8 @@ plugins {
 
 concreteRoot {
   minecraftServerPath.set("server")
-  paperServerVersionGroup.set("1.19")
-  paperApiVersion.set("1.19.3-R0.1-SNAPSHOT")
+  paperServerVersionGroup.set("1.21")
+  paperApiVersion.set("1.21.4-R0.1-SNAPSHOT")
   acceptServerEula.set(true)
   expansiveItemInclusion.set(true)
 }

@@ -1,11 +1,12 @@
-@file:Suppress("UnstableApiUsage")
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
   `kotlin-dsl`
 
   `maven-publish`
   `java-gradle-plugin`
 
-  id("com.gradle.plugin-publish") version "1.2.0"
+  id("com.gradle.plugin-publish") version "1.3.1"
 }
 
 group = "gay.pizza.foundation"
@@ -17,13 +18,13 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21")
-  implementation("org.jetbrains.kotlin:kotlin-serialization:1.8.21")
-  implementation("com.github.johnrengelman:shadow:8.1.1")
-  implementation("com.google.code.gson:gson:2.10.1")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.20")
+  implementation("org.jetbrains.kotlin:kotlin-serialization:2.1.20")
+  implementation("com.gradleup.shadow:com.gradleup.shadow.gradle.plugin:8.3.6")
+  implementation("com.google.code.gson:gson:2.12.1")
 
   // Implementation of crypto used in smart downloader.
-  implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+  implementation("org.bouncycastle:bcprov-jdk18on:1.80")
 }
 
 gradlePlugin {
@@ -78,14 +79,14 @@ if (gradlePublishingKey != null && gradlePublishingSecret != null) {
 }
 
 java {
-  val version = JavaVersion.toVersion("17")
+  val version = JavaVersion.toVersion("21")
   sourceCompatibility = version
   targetCompatibility = version
 }
 
 tasks.compileKotlin {
-  kotlinOptions {
-    jvmTarget = "17"
+  compilerOptions {
+    jvmTarget.value(JvmTarget.JVM_21)
   }
 }
 
@@ -128,7 +129,7 @@ publishing {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "8.1.1"
+  gradleVersion = "8.13"
 }
 
 java {

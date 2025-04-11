@@ -4,10 +4,12 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
+import org.gradle.process.ExecOperations
 import java.io.File
 import java.util.jar.JarFile
+import javax.inject.Inject
 
-abstract class RunMinecraftServer : DefaultTask() {
+abstract class RunMinecraftServer @Inject constructor(private var execOperations: ExecOperations) : DefaultTask() {
   init {
     outputs.upToDateWhen { false }
   }
@@ -24,7 +26,7 @@ abstract class RunMinecraftServer : DefaultTask() {
     val serverJarFile = minecraftServerDirectory.resolve(getServerJarName())
     val mainClassName = readMainClass(serverJarFile)
 
-    project.javaexec {
+    execOperations.javaexec {
       classpath(serverJarFile.absolutePath)
       workingDir(minecraftServerDirectory)
 
